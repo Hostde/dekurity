@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Info Selengkapnya | Dekurity</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+    * {
+      margin:0; padding:0; box-sizing:border-box;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    .back-btn {
+      display: inline-flex; align-items:center; gap:.5rem;
+      margin-bottom:2rem; color:var(--accent); background:none;
+      border:none; font-size:1rem; font-weight:600; text-decoration:none;
+      transition:color .3s; animation:fadeSlideLeft 1s forwards; opacity:0;
+    }
+    .back-btn i { transition:transform .3s; }
+    .back-btn:hover { color:#00ccba; }
+    .back-btn:hover i { transform:translateX(-3px); }
+
+    header {
+      text-align:center; margin-bottom:2rem;
+      animation:fadeInDown 1s forwards;
+    }
+    header h1 {
+      font-size:2.5rem; color:var(--accent);
+      text-shadow:var(--soft-glow);
+    }
+
+    .info-list {
+      display: grid;
+      gap:2rem;
+      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+      animation:fadeInUp 1.2s forwards;
+      opacity:0;
+    }
+
+    .info-card {
+      background-color:#1a1a2e;
+      padding:1.5rem;
+      border-radius:12px;
+      box-shadow:0 0 15px rgba(0,255,231,0.1);
+      transition:transform .3s,box-shadow .3s;
+    }
+    .info-card:hover {
+      transform:translateY(-5px);
+      box-shadow:0 0 20px rgba(0,255,231,0.3);
+    }
+    .info-card h3 {
+      margin-bottom:.75rem;
+      color:var(--accent);
+      font-size:1.4rem;
+    }
+    .info-card p {
+      font-size:.95rem; line-height:1.5; color:#ccc;
+    }
+
+    /* Partner sub-section */
+    .partner-list {
+      display: grid;
+      gap:2rem;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      margin-top:1rem;
+    }
+    .partner-card {
+      background-color:#252536;
+      padding:1rem;
+      border-radius:12px;
+      text-align:center;
+      box-shadow:0 0 10px rgba(0,255,231,0.1);
+      transition:transform .3s,box-shadow .3s;
+    }
+    .partner-card:hover {
+      transform:translateY(-5px);
+      box-shadow:0 0 20px rgba(0,255,231,0.3);
+    }
+    .partner-card img {
+      width:80px; height:80px; border-radius:50%;
+      object-fit:cover; margin-bottom:.75rem;
+      box-shadow:0 0 8px var(--soft-glow);
+    }
+    .partner-card h4 {
+      margin-bottom:.5rem; color:var(--accent);
+      font-size:1.2rem;
+    }
+    .partner-card p {
+      font-size:.9rem; color:#ccc;
+    }
+
+    @keyframes fadeInDown {
+      from { transform:translateY(-20px); opacity:0 }
+      to   { transform:translateY(0);    opacity:1 }
+    }
+    @keyframes fadeInUp {
+      from { transform:translateY(30px); opacity:0 }
+      to   { transform:translateY(0);    opacity:1 }
+    }
+    @keyframes fadeSlideLeft {
+      0%   { opacity:0; transform:translateX(-20px) }
+      100% { opacity:1; transform:translateX(0) }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back to Home -->
+  <a href="index.html" class="back-btn">
+    <i class="fas fa-house"></i> Back to Home
+  </a>
+
+  <header>
+    <h1>Info Selengkapnya</h1>
+  </header>
+
+  <div class="info-list">
+    <!-- Profil -->
+    <div class="info-card">
+      <h3>Profil Singkat</h3>
+      <p>
+        Saya Arya Deka Alhadid, siswa & Blue Team/Pentester di Jambi. Aktif menciptakan tool cybersecurity di berbagai platform dan terus mengasah kemampuan di bidang AI & programming.
+      </p>
+    </div>
+
+    <!-- Keahlian -->
+    <div class="info-card">
+      <h3>Keahlian Utama</h3>
+      <p>
+        • Web Development (HTML, CSS, JavaScript, React)<br>
+        • Cybersecurity (Penetration Testing, SIEM, Threat Hunting)<br>
+        • Python Scripting & CLI Tools<br>
+        • Ai Engineer & Prompt Engineer
+      </p>
+    </div>
+
+    <!-- Proyek -->
+    <div class="info-card">
+      <h3>Info Lainnya</h3>
+      <p>
+        - Saya memiliki Wanita Favorit Bernama Dila<br>
+        - Saya juga memiliki Bisnis Jasa Digital bernama dSolutions<br>
+        - Saya juga aktif dalam bermain game Mobile Legends<br>
+        - Saya juga salah satu peminat di bidang Web3 seperti CryptoCurrency
+      </p>
+    </div>
+
+    <!-- Kontak -->
+    <div class="info-card">
+      <h3>Kontak & Sosial</h3>
+      <p>
+        <i class="fas fa-envelope"></i> dekurity@gmail.com<br>
+        <i class="fab fa-github"></i> github.com/Dekurity<br>
+        <i class="fab fa-instagram"></i> instagram.com/dekurity
+      </p>
+    </div>
+
+    <!-- Partner -->
+    <div class="info-card" style="grid-column:1/-1;">
+      <h3>Partner Kami</h3>
+      <div class="partner-list">
+        <div class="partner-card">
+          <img src="cryptdefender.jpg" alt="Partner 1">
+          <h4>CryptDefender</h4>
+          <p>Spesialis developper program python dan tools tools cyber security</p>
+        </div>
+        <div class="partner-card">
+          <img src="JM.jpg" alt="Partner 2">
+          <h4>JM</h4>
+          <p>Membantu dalam penyelesaian masalah di bidang Percodingan Dan Cyber Security</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

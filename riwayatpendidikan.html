@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Education History</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      animation: fadeSlideLeft 1s ease forwards;
+      opacity: 0;
+    }
+
+    .back-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #00ccba;
+    }
+
+    .back-btn:hover i {
+      transform: translateX(-3px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.8;
+    }
+
+    .timeline {
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .education {
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+      position: relative;
+      animation: fadeInUp 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .education::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: absolute;
+      left: -9px;
+      top: 0;
+      box-shadow: var(--soft-glow);
+    }
+
+    .education h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+    }
+
+    .education span {
+      font-size: 0.9rem;
+      color: #aaa;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .education p {
+      font-size: 1rem;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeSlideLeft {
+      0% { opacity: 0; transform: translateX(-20px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .education:nth-child(1) { animation-delay: 0.3s; }
+    .education:nth-child(2) { animation-delay: 0.6s; }
+    .education:nth-child(3) { animation-delay: 0.9s; }
+  </style>
+</head>
+<body>
+
+  <!-- Back to Home -->
+  <a href="index.html" class="back-btn">
+    <i class="fas fa-house"></i> Back to Home
+  </a>
+
+  <header>
+    <h1>Riwayat Pendidikan</h1>
+    <p>Riwayat pendidikan formal</p>
+  </header>
+
+  <div class="timeline">
+    <div class="education">
+      <h3>Sekolah Dasar</h3>
+      <span>SDN 50 KOTA JAMBI - 2014 s/d 2020</span>
+      <p>Mempelajari pelajaran yang di ajarkan pada kebanyakan anak anak di tingkat Sekolah Dasar.</p>
+    </div>
+
+    <div class="education">
+      <h3>Sekolah Menengah Pertama</h3>
+      <span>MTSN 4 Kota Jambi - 2021 s/d 2023</span>
+      <p>Mengikuti pelajaran umum yang di ajarkan pada tingkat sekolah menengah pertama dengan lebih banyak mata pelajaran Agama Islam</p>
+    </div>
+
+    <div class="education">
+      <h3>Sekolah Menengah Utama</h3>
+      <span>SMK UNGGUL SAKTI KOTA JAMBI - 2023 s/d 2026</span>
+      <p>Mempelajari pelajaran di bidang Teknik Komputer dan Jaringan, walaupun bidang sekolah saya itu satu arah dengan bidang yang saya kuasai saya tidak mengambil ilmu dari sekolah walaupun pihak sekolah sudah berusaha untuk mengajar saya, karna saya tidak suka dengan sekolah formal yang di buat dengan sistem Pernilaian pada tugas, saya lebih cenderung belajar Ototidak Melalui Artifical Intelegence, Youtube, Dan sedikit bertanya kepada Orang-orang.</p>
+    </div>
+  </div>
+
+</body>
+</html>

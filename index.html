@@ -1,582 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dekurity</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dekurity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .menu-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .microchip-icon {
+      font-size: 2.2rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease;
+      z-index: 2;
+      position: relative;
+      padding: 12px;
+      border-radius: 50%;
+      animation: introGlow 1.5s ease;
+    }
+
+    .microchip-icon:hover {
+      color: var(--text);
+      text-shadow: var(--soft-glow);
+    }
+
+    .microchip-icon.clicked {
+      animation: chip-bounce 0.4s ease;
+    }
+
+    @keyframes chip-bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3) rotate(10deg); }
+      100% { transform: scale(1); }
+    }
+
+    .border-shape {
+      position: absolute;
+      top: 50%;
+      right: 36px;
+      transform: translateY(-50%);
+      height: 27px;
+      width: ;
+      background: rgba(0, 255, 231, 0.15);
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      box-shadow: var(--soft-glow);
+      transition: width 0.5s ease-in-out;
+      z-index: 0;
+    }
+
+    .menu-icons {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .menu-icons a {
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s, color 0.3s ease, text-shadow 0.3s ease;
+      text-decoration: none;
+    }
+
+    .menu-icons a:hover {
+      transform: scale(1.2);
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+    }
+
+    .menu-container.active .border-shape {
+      width: 257px;
+    }
+
+    .menu-container.active .menu-icons {
+      opacity: 1;
+    }
+
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+      max-width: 1000px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .profile img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(0, 255, 231, 0.5);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      animation: introGlow 1.5s ease;
+    }
+
+    .profile img:hover {
+      transform: scale(1.1) rotate(-3deg);
+      box-shadow: 0 0 25px rgba(0, 255, 231, 0.9);
+    }
+
+    .profile img:active {
+      animation: clickShake 0.4s ease;
+    }
+
+    @keyframes introGlow {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes clickShake {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.05) rotate(2deg); }
+      50% { transform: scale(0.95) rotate(-2deg); }
+      75% { transform: scale(1.02) rotate(1deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .description {
+      flex: 1;
+      max-width: 580px;
+      text-align: left;
+      animation: slideIn 1s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .description h2 {
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+      margin-bottom: 15px;
+      font-size: 2rem;
+    }
+
+    .description p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .social-icons {
+      margin-top: 25px;
+    }
+
+    .social-icons a {
+      color: var(--accent);
+      font-size: 1.7rem;
+      margin-right: 20px;
+      text-decoration: none;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .profile {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .description {
+        text-align: left !important;
+      }
+    }
     
-        <!-- Meta Description -->
-    <meta name="description" content="Dekurity adalah seorang cybersecurity, prohrammer python, Security Analyst, dan pengembangan alat keamanan seperti Sonalyst dan Firewall Enterprise.">
-    
-    <meta name="keywords" content="cybersecurity, SOC, Blue Team, Dekurity, web security, security tools, digital forensics, malware analysis, Solid Siber ID, security monitoring, cyber defense, threat intelligence, SIEM, intrusion detection, intrusion prevention, firewall security, log analysis, incident response, vulnerability management, endpoint security, security operations, cyber threat hunting, security automation, risk assessment, cyber risk management, security compliance, GDPR, ISO 27001, NIST, security awareness, cyber hygiene, phishing detection, email security, SOC analyst, security engineering, system hardening, network defense, cloud security, DevSecOps, security architecture, zero trust, identity and access management, IAM, privileged access management, PAM, endpoint detection and response, EDR, extended detection and response, XDR, security orchestration, security incident management, deception technology, honeypots, cyber intelligence, cyber resilience, disaster recovery, business continuity, cybersecurity policies, security frameworks, patch management, data loss prevention, DLP, insider threat detection, security audits, security governance, compliance security, threat modeling, cybercrime prevention, data privacy, privacy engineering, DNS security, domain security, IoT security, application security, API security, Kubernetes security, cloud security posture management, CSPM, security misconfigurations, cloud workload protection, forensic tools, memory forensics, disk forensics, SIEM solutions, log correlation, security analytics, anomaly detection, dark web monitoring, cyber drills, security awareness training, cyber resilience strategy, phishing simulations, security testing, continuous monitoring, behavioral analytics, anomaly detection, endpoint protection, vulnerability scanning, cyber law, cyber regulations, secure coding, secure software development, software composition analysis, SCA, cybersecurity certifications, CISSP, CCSP, CISM, CISA, CHFI, GSEC, GCIA, GCFA, security consulting, cybersecurity freelancing, security research, artificial intelligence in cybersecurity, machine learning in security, threat intelligence platforms, risk-based security, DNS filtering, web filtering, security operations automation, next-gen firewall, SOC maturity model, MITRE ATT&CK for defenders, NIST cybersecurity framework, SANS security operations, CVE monitoring, threat feed integration, cloud security monitoring, SaaS security, container security, encryption best practices, security in digital transformation, OT security, industrial cybersecurity, security in critical infrastructure, medical device security, healthcare cybersecurity, financial cybersecurity, cyber threat landscape, cyber warfare defense, nation-state defense, security awareness culture, security champions, secure cloud adoption, zero-day defense, advanced persistent threats, APT defense, identity security, multi-factor authentication, MFA, password security, biometric authentication, behavioral biometrics, threat intelligence lifecycle, SOC automation, cloud-native security, federated security, federated identity, single sign-on, SSO, access control, security in SDLC, software security assurance, threat intelligence sharing, cyber fusion center, proactive defense, cyber deception, security in 5G networks, blockchain security, supply chain security, third-party risk management, security in AI systems, cybersecurity trends, Dekurity research, Solid Siber ID initiatives, cybersecurity thought leadership">
-    
-    <link rel="icon" href="favicon.png" type="image/png">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Existing CSS tetap dipertahankan */
-        :root {
-            --primary-blue: #2a75ff;
-            --dark-blue: #0a192f;
-            --light-blue: #ccd6f6;
-            --white: #e6f1ff;
-        }
+        .floating-icon {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      font-size: 32px;
+      color: var(--accent);
+      cursor: pointer;
+      z-index: 1001; /* lebih tinggi dari panel */
+      animation: float 2s ease-in-out infinite,introGlow 1.5s ease;
+      transition: transform 0.3s ease;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    .floating-icon:hover {
+      transform: scale(1.1);
+      text-shadow: var(--soft-glow);
+    }
 
-        body {
-            background-color: var(--dark-blue);
-            color: var(--light-blue);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
 
-        /* Navigation */
-        .navbar {
-            padding: 0.3rem 3%;
-            background-color: rgba(10, 25, 47, 0.95);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
+    .copyright-panel {
+      position: fixed;
+      bottom: 35px;
+      left: 70px; /* geser lebih jauh dari icon */
+      background-color: #1a1a2e;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      color: var(--text);
+      font-size: 12px;
+      min-width: 180px;
+      box-shadow: var(--soft-glow);
+      z-index: 1000; /* lebih rendah dari ikon */
 
-        .logo {
-            font-size: 1.8rem;
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 600;
-        }
+      opacity: 0;
+      transform: translateX(-120%);
+      pointer-events: none;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            color: var(--light-blue);
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        .nav-links a:hover {
-            background-color: rgba(42, 117, 255, 0.1);
-            color: var(--primary-blue);
-        }
-
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            color: var(--white);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
-            margin-top: -80px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--white);
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: var(--primary-blue);
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 5%;
-        }
-
-        .section h2 {
-            font-size: 2.8rem;
-            margin-bottom: 4rem;
-            color: var(--white);
-            position: relative;
-            display: inline-block;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary-blue);
-        }
-
-        /* Profile Card */
-        .profile-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(42, 117, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            display: flex;
-            gap: 2rem;
-            border: 1px solid rgba(42, 117, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .profile-image {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--primary-blue);
-            flex-shrink: 0;
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .profile-content h3 {
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-
-        .position {
-            color: var(--primary-blue);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-details p {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .social-links {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .social-links a {
-            color: var(--light-blue);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-blue);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-card {
-            background-color: rgba(42, 117, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(42, 117, 255, 0.2);
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .skill-card h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background-color: rgba(42, 117, 255, 0.05);
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid rgba(42, 117, 255, 0.1);
-        }
-
-        .project-card h3 {
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        /* Contact Form */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            background-color: rgba(42, 117, 255, 0.05);
-            border: 1px solid rgba(42, 117, 255, 0.2);
-            color: var(--light-blue);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(42, 117, 255, 0.1);
-        }
-
-        button {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #1a5de0;
-        }
-
-        /* New Footer Styles */
-        footer {
-            background-color: rgba(10, 25, 47, 0.95);
-            padding: 4rem 5%;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-section h4 {
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .footer-links a {
-            color: var(--light-blue);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-blue);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(42, 117, 255, 0.1);
-        }
-
-        /* New Blog Section */
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .blog-card {
-            background: rgba(42, 117, 255, 0.05);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .blog-date {
-            color: var(--primary-blue);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background-color: var(--dark-blue);
-                padding: 2rem 5%;
-                gap: 1.5rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .section h2 {
-                font-size: 2.2rem;
-            }
-
-            .profile-card {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .profile-image {
-                width: 200px;
-                height: 200px;
-            }
-
-            .profile-details p {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    .copyright-panel.show {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="logo">Dekurity</a>
-        <ul class="nav-links">
-            <li><a href="#about"> About Me</a></li>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-        </ul>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
-    </nav>
-    
-    <section class="hero">
-        <div class="hero-content">
-           <h1>Blue Team and Python Programmer</h1> 
-<p>Expert in securing digital infrastructures, identifying vulnerabilities, and mitigating cyber threats through advanced monitoring and security operations. Utilizing Python to automate security tasks, conduct forensic investigations, and strengthen system defenses against evolving cyber attacks.</p>            <p>Securing Digital Landscapes with Expertise and Passion</p>
-        </div>
-    </section>
 
-    <section id="about" class="section">
-        <h2>About Me</h2>
-        <p class="about-text">
-           I am a dedicated Blue Team cybersecurity professional and Python developer, committed to safeguarding digital assets and fortifying online environments against cyber threats. My expertise lies in threat detection, security automation, and incident response, leveraging Python to develop defensive security tools, enhance monitoring capabilities, and streamline security operations. Passionate about proactive defense, I specialize in analyzing threats, mitigating vulnerabilities, and strengthening cybersecurity resilience through automation and advanced security strategies.
+  <div class="menu-container" id="menuToggle">
+    <div class="border-shape"></div>
+    <i class="fas fa-microchip microchip-icon" id="chip"></i>
+    <div class="menu-icons">
+      <a href="infoselengkapnya.html" title="Info Selengkapnya"><i class="fas fa-clipboard-list"></i></a>
+      <a href="tools.html" title="Tools"><i class="fas fa-tools"></i></a>
+      <a href="riwayatpendidikan.html" title="History Pendidikan"><i class="fas fa-graduation-cap"></i></a>
+      <a href="pengalaman.html" title="Pengalaman"><i class="fas fa-project-diagram"></i></a>
+      <a href="myskills.html" title="My Skills"><i class="fas fa-puzzle-piece"></i></a>
+    </div>
+  </div>
 
+  <div class="profile">
+    <img id="profilePic" src="deka.jpg" alt="Foto Profil" />
+    <div class="description">
+      <h2>Dekurity</h2>
+      <p>
+Saya Arya Deka Alhadid, siswa di salah satu sekolah swasta ternama di Jambi. Aktif di dunia cyber security sebagai Blue Team dan Pentester, saya juga antusias dalam pemrograman Python, pengembangan website (HTML, CSS, JavaScript), serta teknologi AI sebagai Prompt Engineer dan AI Engineer. Meski telah menciptakan berbagai proyek, saya terus belajar dan mengembangkan diri di dunia cyber.
+      </p>
 
-        </p>
-    </section>
+      <div class="social-icons">
+        <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://instagram.com/yourusername" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:youremail@example.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </div>
 
-    <section id="profile" class="section">
-        <h2>Profile</h2>
-        <div class="profile-card">
-            <div class="profile-image">
-                <img src="profile-image.jpg" alt="Arya Deka Alhadid">
-            </div>
-            <div class="profile-content">
-                <h3>Arya Deka Alhadid</h3>
-                <p class="position">Cybersecurity and Python Programmer</p>
-                <div class="profile-details">
-                    <p><i class="fas fa-rocket"></i> Founder of Solid Siber ID</p>
-                    <p><i class="fas fa-folder"></i> Working of Cyber Security</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Based in Jambi, My Home</p>
-                </div>
-<div class="social-links">
-    <a href="https://www.instagram.com/Dekurity" target="_blank">
-        <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://github.com/Dekurity" target="_blank">
-        <i class="fab fa-github"></i>
-    </a>
-    <a href="mailto:dekurity@gmail.com">
-        <i class="fas fa-envelope"></i>
-    </a>
-</div>
-        </div>
-    </section>
+  <i class="fas fa-info-circle floating-icon" onclick="toggleCopyright()"></i>
 
-    <section id="skills" class="section">
-        <h2>My Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h3>Network Security</h3>
-                <p>Expertise in securing network infrastructures and protocols.</p>
-            </div>
-            <div class="skill-card">
-                <h3>Penetration Testing</h3>
-                <p>Conducting thorough assessments to identify vulnerabilities.</p>
-            </div>
-            <div class="skill-card">
-                <h3>Incident Response</h3>
-                <p>Efficiently managing and responding to security incidents.</p>
-            </div>
-            <div class="skill-card">
-                <h3>Security Awareness Training</h3>
-                <p>Educating teams on best practices for cybersecurity.</p>
-            </div>
-                     <div class="skill-card">
-                <h3>Python Programmer</h3>
-                <p>Create python programs such as software, automation tools or cyber security tools.</p>
-            </div>
-        </div>
-    </section>
+  <!-- Copyright Panel -->
+  <div class="copyright-panel" id="copyrightPanel">
+    &copy; 2025 Dekurity.
+  </div>
 
-    <section id="projects" class="section">
-        <h2>My Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>Project A</h3>
-                <p>Developed a security framework for a local startup.</p>
-            </div>
-            <div class="project-card">
-                <h3>Project B</h3>
-                <p>Conducted a security audit for a non-profit organization.</p>
-            </div>
-            <div class="project-card">
-                <h3>Project C</h3>
-                <p>Created a cybersecurity awareness program for all the people</p>
-            </div>
-            <div class="project-card">
-                <h3>Project D</h3>
-                <p>Provided consulting services for a tech company.</p>
-            </div>
-                        <div class="project-card">
-                <h3>Project E</h3>
-                <p>Developing automation software or tools Cyber Security using Python programming language.</p>
-            </div>
-        </div>
-    </section>
+  <audio id="clickSound" src="menu.mp3" preload="auto"></audio>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About Me</h4>
-                <p>Passionate about cybersecurity and committed to protecting the digital environment and always learning to develop really cool python programs.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Links</h4>
-                <div class=" footer-links">
-                    <a href="#about">About Me</a>
-                    <a href="#profile">Profile</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Projects</a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4>Contact Info</h4>
-                <p>Email: dekurity@gmail.com</p>
-                <p>Instagram: @dekurity</p>
-            </div>
-            <div class="footer-section">
-<h4>Follow Me</h4>
-<div class="social-links">
-    <a href="https://github.com/Dekurity" target="_blank">
-        <i class="fab fa-github"></i>
-    </a>
-    <a href="https://www.instagram.com/dekurity" target="_blank">
-        <i class="fab fa-instagram"></i>
-    </a>
-</div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 Dekurity. All rights reserved.</p>
-        </div>
-    </footer>
+  <script>
+    const menu = document.getElementById('menuToggle');
+    const chip = document.getElementById('chip');
+    const sound = document.getElementById('clickSound');
 
-    <script>
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
+    chip.addEventListener('click', () => {
+      menu.classList.toggle('active');
 
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+      // Animate chip
+      chip.classList.add('clicked');
+      setTimeout(() => chip.classList.remove('clicked'), 400);
 
-        const smoothScroll = (target) => {
-            document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
-            navLinks.classList.remove('active'); // Close the menu on link click
-        };
+      // Play sound
+      sound.currentTime = 0;
+      sound.play();
+    });
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = e.target.getAttribute('href');
-                smoothScroll(target);
-            });
-        });
-    </script>
+    // Load profile picture from localStorage
+    const profilePic = document.getElementById('profilePic');
+    const storedImage = localStorage.getItem('profileImage');
+    if (storedImage) {
+      profilePic.src = storedImage;
+    } else {
+      profilePic.src = 'https://via.placeholder.com/150';
+    }
+
+    // Play sound from base64 on click
+    profilePic.addEventListener('click', () => {
+      const soundBase64 = localStorage.getItem('profileSound');
+      if (soundBase64) {
+        const audio = new Audio(soundBase64);
+        audio.play();
+      }
+    });
+
+    function toggleCopyright() {
+      const panel = document.getElementById('copyrightPanel');
+      panel.classList.toggle('show');
+    }
+  </script>
+
 </body>
 </html>

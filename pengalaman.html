@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Experience</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      animation: fadeSlideLeft 1s ease forwards;
+      opacity: 0;
+    }
+
+    .back-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #00ccba;
+    }
+
+    .back-btn:hover i {
+      transform: translateX(-3px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.8;
+    }
+
+    .timeline {
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .experience {
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+      position: relative;
+      animation: fadeInUp 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .experience::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: absolute;
+      left: -9px;
+      top: 0;
+      box-shadow: var(--soft-glow);
+    }
+
+    .experience h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+    }
+
+    .experience span {
+      font-size: 0.9rem;
+      color: #aaa;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .experience p {
+      font-size: 1rem;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeSlideLeft {
+      0% { opacity: 0; transform: translateX(-20px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .experience:nth-child(1) { animation-delay: 0.3s; }
+    .experience:nth-child(2) { animation-delay: 0.6s; }
+    .experience:nth-child(3) { animation-delay: 0.9s; }
+  </style>
+</head>
+<body>
+
+  <!-- Back to Home -->
+  <a href="index.html" class="back-btn">
+    <i class="fas fa-house"></i> Back to Home
+  </a>
+
+  <header>
+    <h1>Pengalaman</h1>
+    <p>Riwayat pengalaman profesional dan proyek</p>
+  </header>
+
+  <div class="timeline">
+    <div class="experience">
+      <h3>Cybersecurity</h3>
+      <span>Ototidak</span>
+      <p>Saya memiliki pengalaman di bidang ini cukup lumayan dalam, apalagi di bidang Blue Team, walaupun saya tidak bekerja untuk sebuah perusahaan untuk menjadi sebuah Cyber Security, tapi setidaknya saya bisa membuktikan skill yang saya punya di bidang Cyber Security saya dapat secara Ototidak</p>
+    </div>
+
+    <div class="experience">
+      <h3>Web Developer Freelance</h3>
+      <span>Remote - Sedang Berlangsung</span>
+      <p>Membuat dan mengelola berbagai website custom menggunakan HTML, CSS, JavaScript, dan framework seperti React serta Tailwind untuk UMKM dan startup.</p>
+    </div>
+
+    <div class="experience">
+      <h3>Programmer Python</h3>
+      <span>Github: Dekurity</span>
+      <p>Walaupun saya tidak bekerja untuk siapapun di bidang Percodingan Python tapi saya bisa membantu banyak orang dengan membagikan tools tools yang terbuat dari Bahasa Pemograman Python, dan saya juga bersedia untuk membantu orang yang siap membayar untuk membuat program python sesuai Request, dengan memanfaatkan alat Seperti Ai saya unggul di bidang ini, karna menurut saya Ai itu alat pembantu kita dalam melakukan berbagai pekerjaan</p>
+    </div>
+  </div>
+
+</body>
+</html>

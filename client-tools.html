@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client‑Side Tools</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .3s ease;
+      animation: fadeSlideLeft 1s ease forwards;
+      opacity: 0;
+    }
+    .back-btn i { transition: transform .3s ease; }
+    .back-btn:hover { color: #00ccba; }
+    .back-btn:hover i { transform: translateX(-3px); }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1s ease-in-out forwards;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+    }
+
+    /* wrapper baru untuk merapikan input */
+    .inputs {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .tool-list {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      animation: fadeInUp 1.2s ease-in-out forwards;
+      opacity: 0;
+    }
+    .tool-card {
+      background-color: #1a1a2e;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,255,231,0.1);
+      transition: transform .3s ease, box-shadow .3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,255,231,0.3);
+    }
+    .tool-card h3 {
+      margin-bottom: .5rem;
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    .tool-card p { font-size:.95rem; color:#ccc; flex-grow:1; }
+    .tool-card button {
+      margin-top: 1rem;
+      background-color: var(--accent);
+      color: #000;
+      padding: .5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background .3s ease;
+    }
+    .tool-card button:disabled { opacity:.6; cursor:not-allowed; }
+    .tool-card button:hover:not(:disabled) { background-color:#00cbb9; }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      background: #222;
+      border: 1px solid var(--accent);
+      color: var(--text);
+      border-radius: 6px;
+    }
+    .error {
+      color: #f55;
+      font-size: .85rem;
+      margin-bottom: 4px;
+    }
+    .progress-container {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 12px;
+      margin-top: 6px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width .5s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity:0 }
+      to   { transform: translateY(0);   opacity:1 }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity:0 }
+      to   { transform: translateY(0);    opacity:1 }
+    }
+    @keyframes fadeSlideLeft {
+      0%   { opacity:0; transform:translateX(-20px) }
+      100% { opacity:1; transform:translateX(0) }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="tools.html" class="back-btn">
+    <i class="fas fa-house"></i> Back to Tools
+  </a>
+
+  <header>
+    <h1>Client‑Side Tools</h1>
+  </header>
+
+  <div class="tool-list">
+    <!-- 1. Hash Generator -->
+    <div class="tool-card">
+      <h3>Generate Hash</h3>
+      <p>Pilih metode hash dan masukkan teks:</p>
+      <div class="error" id="hashError"></div>
+      <div class="inputs">
+        <input type="text" id="hashInput" placeholder="Masukkan teks...">
+        <select id="hashMethod">
+          <option>MD5</option>
+          <option>SHA-1</option>
+          <option>SHA-256</option>
+          <option>SHA-512</option>
+          <option>SHA3</option>
+        </select>
+      </div>
+      <button onclick="generateHash()">Generate</button>
+      <pre id="hashOutput" style="margin-top:10px;white-space:pre-wrap;"></pre>
+    </div>
+
+    <!-- 2. Password Generator -->
+    <div class="tool-card">
+      <h3>Generate Password</h3>
+      <p>Buat password dari unsur & opsi:</p>
+      <div class="error" id="passGenError"></div>
+      <div class="inputs">
+        <input type="text" id="baseInput" placeholder="Unsur dasar (misal nama)...">
+        <input type="number" id="lengthInput" placeholder="Panjang password">
+        <label><input type="checkbox" id="includeSymbols"> Tambahkan simbol</label>
+        <label><input type="checkbox" id="includeNumbers"> Tambahkan angka</label>
+        <label><input type="checkbox" id="includeUppercase"> Kombinasi huruf besar</label>
+      </div>
+      <button onclick="generatePassword()">Buat Password</button>
+      <pre id="generatedPassword" style="margin-top:10px;"></pre>
+    </div>
+
+    <!-- 3. Password Strength Checker -->
+    <div class="tool-card">
+      <h3>Cek Kekuatan Password</h3>
+      <p>Masukkan password untuk dicek:</p>
+      <div class="error" id="passCheckError"></div>
+      <div class="inputs">
+        <input type="text" id="checkPassword" placeholder="Masukkan password...">
+      </div>
+      <button onclick="checkStrength()">Cek</button>
+      <div class="progress-container" style="margin-top:10px;">
+        <div class="progress-bar" id="strengthBar"></div>
+      </div>
+      <div id="strengthText" style="margin-top:6px; font-size:.9rem;"></div>
+    </div>
+
+    <!-- 4. QR Code Generator -->
+    <div class="tool-card">
+      <h3>Generate QR Code</h3>
+      <p>Buat & unduh QR Code dari teks/URL:</p>
+      <div class="error" id="qrError"></div>
+      <div class="inputs">
+        <input type="text" id="qrInput" placeholder="Masukkan teks atau URL...">
+      </div>
+      <button onclick="generateQR()">Generate QR</button>
+      <canvas id="qrCanvas" style="margin-top:10px;"></canvas>
+      <button id="downloadQR" disabled style="margin-top:10px;">Download QR Code</button>
+    </div>
+  </div>
+
+  <!-- CryptoJS & QRious -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+  <script>
+    function generateHash() {
+      const txt = document.getElementById('hashInput').value.trim();
+      const err = document.getElementById('hashError');
+      const out = document.getElementById('hashOutput');
+      if (!txt) { err.textContent='Teks tidak boleh kosong'; out.textContent=''; return }
+      err.textContent='';
+      const m = document.getElementById('hashMethod').value;
+      let h;
+      switch(m) {
+        case 'MD5':      h = CryptoJS.MD5(txt);    break;
+        case 'SHA-1':    h = CryptoJS.SHA1(txt);   break;
+        case 'SHA-256':  h = CryptoJS.SHA256(txt); break;
+        case 'SHA-512':  h = CryptoJS.SHA512(txt); break;
+        case 'SHA3':     h = CryptoJS.SHA3(txt);   break;
+      }
+      out.textContent = h.toString();
+    }
+
+    function generatePassword() {
+      const base = document.getElementById('baseInput').value.trim();
+      const len   = parseInt(document.getElementById('lengthInput').value);
+      const err   = document.getElementById('passGenError');
+      if (!base) { err.textContent='Unsur dasar tidak boleh kosong'; return }
+      if (!len || len<4) { err.textContent='Panjang minimal 4'; return }
+      err.textContent='';
+      let chars = base;
+      if (document.getElementById('includeSymbols').checked)   chars += '!@#$%^&*';
+      if (document.getElementById('includeNumbers').checked)   chars += '0123456789';
+      if (document.getElementById('includeUppercase').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let pwd = '';
+      for (let i=0; i<len; i++) pwd += chars.charAt(Math.floor(Math.random()*chars.length));
+      document.getElementById('generatedPassword').textContent = pwd;
+    }
+
+    function checkStrength() {
+      const pwd = document.getElementById('checkPassword').value;
+      const err = document.getElementById('passCheckError');
+      if (!pwd) { err.textContent='Masukkan password'; return }
+      err.textContent='';
+      let score = 0;
+      if (pwd.length>=8) score++;
+      if (/[A-Z]/.test(pwd)) score++;
+      if (/[0-9]/.test(pwd)) score++;
+      if (/[^A-Za-z0-9]/.test(pwd)) score++;
+      const percent = (score/4)*100;
+      const bar = document.getElementById('strengthBar');
+      const txt = document.getElementById('strengthText');
+      bar.style.width = percent+'%';
+      if (percent<50) { bar.style.background='red'; txt.textContent='Lemah'; }
+      else if (percent<75) { bar.style.background='orange'; txt.textContent='Cukup'; }
+      else if (percent<100) { bar.style.background='lightgreen'; txt.textContent='Kuat'; }
+      else { bar.style.background='var(--accent)'; txt.textContent='Sangat Kuat'; }
+    }
+
+    function generateQR() {
+      const val = document.getElementById('qrInput').value.trim();
+      const err = document.getElementById('qrError');
+      const canvas = document.getElementById('qrCanvas');
+      const btn = document.getElementById('downloadQR');
+      if (!val) { err.textContent='Teks/URL tidak boleh kosong'; return }
+      err.textContent='';
+      const qr = new QRious({ element: canvas, value: val, size: 200 });
+      const safe = val.replace(/[^a-z0-9]/gi,'_');
+      btn.download = `dekurity_${safe}QRCode.png`;
+      btn.href = canvas.toDataURL('image/png');
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
