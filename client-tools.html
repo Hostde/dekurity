@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Client‑Side Tools</title>
+  <title>Live Tools</title>
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
@@ -137,7 +137,40 @@
       0%   { opacity:0; transform:translateX(-20px) }
       100% { opacity:1; transform:translateX(0) }
     }
-  </style>
+  
+.tool-card-button {
+  display: inline-block;
+  text-align: center;
+  background-color: var(--accent);
+  color: #000;
+  padding: .5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background .3s ease;
+}
+.tool-card-button:disabled,
+.tool-card-button[disabled] {
+  opacity: .6;
+  pointer-events: none;
+}
+.tool-card-button:hover:not([disabled]) {
+  background-color: #00cbb9;
+}
+
+
+  .output-box {
+    background: #111;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: .75rem;
+    margin-top: .75rem;
+    font-size: .95rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text);
+  }
+</style>
 </head>
 <body>
 
@@ -146,7 +179,7 @@
   </a>
 
   <header>
-    <h1>Client‑Side Tools</h1>
+    <h1>Live Tools</h1>
   </header>
 
   <div class="tool-list">
@@ -166,7 +199,7 @@
         </select>
       </div>
       <button onclick="generateHash()">Generate</button>
-      <pre id="hashOutput" style="margin-top:10px;white-space:pre-wrap;"></pre>
+      <div id="hashOutput" class="output-box"></div>
     </div>
 
     <!-- 2. Password Generator -->
@@ -182,7 +215,7 @@
         <label><input type="checkbox" id="includeUppercase"> Kombinasi huruf besar</label>
       </div>
       <button onclick="generatePassword()">Buat Password</button>
-      <pre id="generatedPassword" style="margin-top:10px;"></pre>
+      <div id="generatedPassword" class="output-box"></div>
     </div>
 
     <!-- 3. Password Strength Checker -->
@@ -209,8 +242,23 @@
         <input type="text" id="qrInput" placeholder="Masukkan teks atau URL...">
       </div>
       <button onclick="generateQR()">Generate QR</button>
-      <canvas id="qrCanvas" style="margin-top:10px;"></canvas>
-      <button id="downloadQR" disabled style="margin-top:10px;">Download QR Code</button>
+      <div class="output-box" style="text-align:center;">
+        <canvas id="qrCanvas" style="margin-top:10px;"></canvas>
+        <br>
+        <a id="downloadQR" disabled class="tool-card-button" style="margin-top:10px; display:inline-block;">Download QR Code</a>
+      </div>
+      </div>
+      
+          <div class="tool-card">
+      <h3>Whois</h3>
+      <p>Masukan domain untuk mengecek whois</p>
+      <div class="error" id="whoisError"></div>
+      <div class="inputs">
+        <input type="text" id="whoisInput" placeholder="Masukkan domain...">
+      </div>
+      <button onclick="whois()">Whois</button>
+      <div id="whoisOutput" class="output-box"></div>
+    </div>
     </div>
   </div>
 
@@ -237,20 +285,31 @@
     }
 
     function generatePassword() {
-      const base = document.getElementById('baseInput').value.trim();
-      const len   = parseInt(document.getElementById('lengthInput').value);
-      const err   = document.getElementById('passGenError');
-      if (!base) { err.textContent='Unsur dasar tidak boleh kosong'; return }
-      if (!len || len<4) { err.textContent='Panjang minimal 4'; return }
-      err.textContent='';
-      let chars = base;
-      if (document.getElementById('includeSymbols').checked)   chars += '!@#$%^&*';
-      if (document.getElementById('includeNumbers').checked)   chars += '0123456789';
-      if (document.getElementById('includeUppercase').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      let pwd = '';
-      for (let i=0; i<len; i++) pwd += chars.charAt(Math.floor(Math.random()*chars.length));
-      document.getElementById('generatedPassword').textContent = pwd;
-    }
+  const base = document.getElementById('baseInput').value.trim();
+  const len   = parseInt(document.getElementById('lengthInput').value);
+  const err   = document.getElementById('passGenError');
+
+  if (!base) { err.textContent='Unsur dasar tidak boleh kosong'; return }
+  if (!len || len < base.length + 1) { // panjang harus lebih dari base
+    err.textContent = `Panjang minimal ${base.length + 1}`;
+    return;
+  }
+
+  err.textContent = '';
+  let chars = '';
+  if (document.getElementById('includeSymbols').checked)   chars += '!@#$%^&*';
+  if (document.getElementById('includeNumbers').checked)   chars += '0123456789';
+  if (document.getElementById('includeUppercase').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  let extra = '';
+  for (let i = 0; i < (len - base.length); i++) {
+    extra += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  // Unsur tetap utuh, tambahan karakter bisa di awal atau akhir
+  const pwd = Math.random() < 0.5 ? extra + base : base + extra;
+  document.getElementById('generatedPassword').textContent = pwd;
+}
 
     function checkStrength() {
       const pwd = document.getElementById('checkPassword').value;
@@ -281,10 +340,41 @@
       err.textContent='';
       const qr = new QRious({ element: canvas, value: val, size: 200 });
       const safe = val.replace(/[^a-z0-9]/gi,'_');
-      btn.download = `dekurity_${safe}QRCode.png`;
-      btn.href = canvas.toDataURL('image/png');
-      btn.disabled = false;
+      btn.setAttribute('download', `dekurity_${safe}QRCode.png`);
+    btn.setAttribute('href', canvas.toDataURL('image/png'));
+    btn.removeAttribute('disabled');
     }
+    
+  async function whois() {
+  const input = document.getElementById("whoisInput").value.trim();
+  const errorBox = document.getElementById("whoisError");
+  const outputBox = document.getElementById("whoisOutput");
+
+  // Reset output and error
+  errorBox.textContent = "";
+  outputBox.textContent = "";
+
+  if (!input) {
+    errorBox.textContent = "Domain tidak boleh kosong.";
+    return;
+  }
+
+  try {
+    outputBox.innerHTML = "<p>Mengambil data...</p>";
+
+    const response = await fetch(`/api/whois?domain=${encodeURIComponent(input)}`);
+    const data = await response.text(); // <-- ubah ke .text() karena response-nya plaintext
+
+    if (!response.ok) {
+      throw new Error(data || "Gagal mengambil data WHOIS.");
+    }
+
+    // Tampilkan hasil whois dalam <pre> agar rapi
+    outputBox.innerHTML = `<pre>${data}</pre>`;
+  } catch (err) {
+    errorBox.textContent = err.message;
+  }
+}
   </script>
 </body>
 </html>
