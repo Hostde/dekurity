@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desktop Tools</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --text: #f0f0f0;
+      --accent: #00ffe7;
+      --soft-glow: 0 0 10px rgba(0, 255, 231, 0.4);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .3s ease;
+      animation: fadeSlideLeft 1s ease forwards;
+      opacity: 0;
+    }
+    .back-btn i { transition: transform .3s ease; }
+    .back-btn:hover { color: #00ccba; }
+    .back-btn:hover i { transform: translateX(-3px); }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1s ease-in-out forwards;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      text-shadow: var(--soft-glow);
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin: 1.5rem 0 .75rem;
+      text-shadow: var(--soft-glow);
+      animation: fadeInDown 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .tool-list {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      animation: fadeInUp 1.2s ease-in-out forwards;
+      opacity: 0;
+    }
+    .tool-card {
+      background-color: #1a1a2e;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,255,231,0.1);
+      transition: transform .3s ease, box-shadow .3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,255,231,0.3);
+    }
+    .tool-card h3 {
+      margin-bottom: .5rem;
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    .tool-card p {
+      font-size:.95rem;
+      color:#ccc;
+      flex-grow:1;
+      margin-bottom:1rem;
+    }
+    .tool-card a {
+      margin-top: auto;
+      display: inline-block;
+      background-color: var(--accent);
+      color: #000;
+      padding: .5rem 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      text-align: center;
+      transition: background .3s ease;
+    }
+    .tool-card a:hover {
+      background-color:#00cbb9;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity:0 }
+      to   { transform: translateY(0);   opacity:1 }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity:0 }
+      to   { transform: translateY(0);    opacity:1 }
+    }
+    @keyframes fadeSlideLeft {
+      0%   { opacity:0; transform:translateX(-20px) }
+      100% { opacity:1; transform:translateX(0) }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back to Tools -->
+  <a href="tools.html" class="back-btn">
+    <i class="fas fa-house"></i> Back to Tools
+  </a>
+
+  <header>
+    <h1>Desktop Tools</h1>
+  </header>
+
+ 
+  <section>
+    <h2>Windows Tools</h2>
+<div class="tool-list">
+    <div class="tool-card">
+      <h3>Servinf</h3>
+      <p>Tools yanh menampilkan Server Info dengan input domain dengan Interface CLI.</p>
+      <p>Note: Download Python dari website resminya jika belom tersedia!</p>
+      <p>Author: Dekurity</p>
+      <a href="Servinf.zip" download="Servinf.zip">Download Tools</a>
+    </div>
+
+  
+    <div class="tool-card">
+      <h3>Delearn</h3>
+      <p>Tools yang digunakan untuk belajar dari Interface CLI</p>
+      <p>Note: Note: Download Python dari website resminya jika belom tersedia!</p>
+      <p>Author: Dekurity</p>
+      <a href="Delearn.zip" download="Delearn.zip">Download Tools</a>
+    </div>
+
+    <div class="tool-card">
+      <h3>Stacry</h3>
+      <p>Tools yang menampilkan harga realtime Crypto melalui CLI.</p>
+       <p>Note: Note: Download Python dari website resminya jika belom tersedia!</p>
+       <p>Author: Dekurity</p>
+      <a href="Stacry.zip" download="Stacry.zip">Download Tools</a>
+    </div>
+    
+        <div class="tool-card">
+      <h3>OSINTron</h3>
+      <p>Tools CLI yang berguna untuk kebutuhan OSINT</p>
+       <p>Note: Note: Download Python dari website resminya jika belom tersedia!</p>
+       <p>Author: CryptDefender</p>
+      <a href="OSINTron.zip" download="OSINTron.zip">Download Tools</a>
+    </div>
+  </div>
+  </section>
+
+  <section>
+    <h2>Linux Tools</h2>
+<div class="tool-list">
+    <div class="tool-card">
+      <h3>Servinf</h3>
+      <p>Tools yanh menampilkan Server Info dengan input domain dengan Interface CLI.</p>
+      <p>Note: Download Python jika belom tersedia!</p>
+      <p>Author: Dekurity</p>
+      <a href="Servinf.zip" download="Servinf.zip">Download Tools</a>
+    </div>
+
+  
+    <div class="tool-card">
+      <h3>Delearn</h3>
+      <p>Tools yang digunakan untuk belajar dari Interface CLI</p>
+      <p>Note: Note: Download Python jika belom tersedia!</p>
+      <p>Author: Dekurity</p>
+      <a href="Delearn.zip" download="Delearn.zip">Download Tools</a>
+    </div>
+
+    <div class="tool-card">
+      <h3>Stacry</h3>
+      <p>Tools yang menampilkan harga realtime Crypto melalui CLI.</p>
+       <p>Note: Note: Download Python jika belom tersedia!</p>
+       <p>Author: Dekurity</p>
+      <a href="Stacry.zip" download="Stacry.zip">Download Tools</a>
+    </div>
+    
+        <div class="tool-card">
+      <h3>OSINTron</h3>
+      <p>Tools CLI yang berguna untuk kebutuhan OSINT</p>
+       <p>Note: Note: Download Python jika belom tersedia!</p>
+       <p>Author: CryptDefender</p>
+      <a href="OSINTron.zip" download="OSINTron.zip">Download Tools</a>
+    </div>
+    </div>
+  </section>
+
+</body>
+</html>

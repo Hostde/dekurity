@@ -249,19 +249,54 @@
       </div>
       </div>
       
-          <div class="tool-card">
-      <h3>Whois</h3>
-      <p>Masukan domain untuk mengecek whois</p>
-      <div class="error" id="whoisError"></div>
-      <div class="inputs">
-        <input type="text" id="whoisInput" placeholder="Masukkan domain...">
-      </div>
-      <button onclick="whois()">Whois</button>
-      <div id="whoisOutput" class="output-box"></div>
-    </div>
-    </div>
+      <div class="tool-card">
+  <h3>Subnet Calculator</h3>
+  <p>Masukkan IP dan CIDR (misalnya 192.168.1.1/24):</p>
+  <div class="inputs">
+    <input type="text" id="subnetInput" placeholder="192.168.1.1/24">
   </div>
-
+  <button onclick="calculateSubnet()">Hitung</button>
+  <div id="subnetOutput" class="output-box"></div></div>
+      
+     <div class="tool-card">
+  <h3>URL Encoder/Decoder</h3>
+  <p>Masukkan teks untuk di-encode atau decode:</p>
+  <div class="inputs">
+        <input type="text" id="urlInput" placeholder="192.168.1.1/24">
+  </div>
+  <button onclick="encodeURL()">Encode</button>
+  <button onclick="decodeURL()">Decode</button>
+  <div id="urlOutput" class="output-box"></div></div>
+  
+  <div class="tool-card">
+  <h3>Mock URL Shortener</h3>
+  <p>Masukkan URL panjang dan hasilkan URL pendek simulasi:</p>
+  <div class="inputs">
+    <input type="text" id="longUrl" placeholder="https://example.com/panjang...">
+  </div>
+  <button onclick="shortenUrl()">Shorten</button>
+  <div id="shortUrlOutput" class="output-box"></div></div>
+  
+  <div class="tool-card">
+  <h3>Encrypt / Decrypt Teks</h3>
+  <p>Masukkan teks dan password untuk enkripsi atau dekripsi:</p>
+  <div class="inputs">
+    <input type="text" id="cryptoText" placeholder="Teks...">
+    <input type="password" id="cryptoKey" placeholder="Password">
+  </div>
+  <button onclick="encryptText()">Encrypt</button>
+  <button onclick="decryptText()">Decrypt</button>
+  <div id="cryptoOutput" class="output-box"></div></div>
+  
+  <div class="tool-card">
+  <h3>HTML Sanitizer</h3>
+  <p>Masukkan HTML mentah, lihat hasil yang aman:</p>
+  <div class="inputs">
+        <input type="text" id="htmlRaw" placeholder="<script>alert('Dekurity')</script>">
+  </div>
+  <button onclick="sanitizeHTML()">Sanitize</button>
+  <div id="htmlSafeOutput" class="output-box"></div>
+      
   <!-- CryptoJS & QRious -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
@@ -345,35 +380,77 @@
     btn.removeAttribute('disabled');
     }
     
-  async function whois() {
-  const input = document.getElementById("whoisInput").value.trim();
-  const errorBox = document.getElementById("whoisError");
-  const outputBox = document.getElementById("whoisOutput");
-
-  // Reset output and error
-  errorBox.textContent = "";
-  outputBox.textContent = "";
-
-  if (!input) {
-    errorBox.textContent = "Domain tidak boleh kosong.";
-    return;
-  }
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script><script>
+function calculateSubnet() {
+  const input = document.getElementById("subnetInput").value.trim();
+  const output = document.getElementById("subnetOutput");
   try {
-    outputBox.innerHTML = "<p>Mengambil data...</p>";
+    const [ip, cidr] = input.split("/");
+    const mask = parseInt(cidr);
+    if (!ip || isNaN(mask)) throw Error("Format harus IP/CIDR");
 
-    const response = await fetch(`/api/whois?domain=${encodeURIComponent(input)}`);
-    const data = await response.text(); // <-- ubah ke .text() karena response-nya plaintext
+    const ipParts = ip.split(".").map(x => parseInt(x));
+    const ipInt = (ipParts[0]<<24) | (ipParts[1]<<16) | (ipParts[2]<<8) | ipParts[3];
+    const netmask = ~(2**(32-mask) - 1) >>> 0;
+    const network = ipInt & netmask;
+    const broadcast = network | (~netmask >>> 0);
+    const first = (network + 1) >>> 0;
+    const last = (broadcast - 1) >>> 0;
+    const total = 2**(32-mask) - 2;
 
-    if (!response.ok) {
-      throw new Error(data || "Gagal mengambil data WHOIS.");
-    }
-
-    // Tampilkan hasil whois dalam <pre> agar rapi
-    outputBox.innerHTML = `<pre>${data}</pre>`;
-  } catch (err) {
-    errorBox.textContent = err.message;
+    const toIP = i => [ (i>>>24)&255, (i>>>16)&255, (i>>>8)&255, i&255 ].join(".");
+    output.textContent = `
+Network Address: ${toIP(network)}
+Subnet Mask: ${toIP(netmask)}
+Broadcast Address: ${toIP(broadcast)}
+First Host: ${toIP(first)}
+Last Host: ${toIP(last)}
+Total Hosts: ${total}`;
+  } catch(err) {
+    output.textContent = "Error: " + err.message;
   }
+}
+
+function encodeURL() {
+  const input = document.getElementById("urlInput").value;
+  document.getElementById("urlOutput").textContent = encodeURIComponent(input);
+}
+function decodeURL() {
+  const input = document.getElementById("urlInput").value;
+  document.getElementById("urlOutput").textContent = decodeURIComponent(input);
+}
+
+function shortenUrl() {
+  const longUrl = document.getElementById("longUrl").value.trim();
+  if (!longUrl) return;
+  const fakeShort = "https://sh.rt/" + btoa(longUrl).slice(0,8);
+  document.getElementById("shortUrlOutput").textContent = fakeShort;
+}
+
+function encryptText() {
+  const text = document.getElementById("cryptoText").value;
+  const key = document.getElementById("cryptoKey").value;
+  if (!text || !key) return;
+  const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+  document.getElementById("cryptoOutput").textContent = encrypted;
+}
+
+function decryptText() {
+  const text = document.getElementById("cryptoText").value;
+  const key = document.getElementById("cryptoKey").value;
+  if (!text || !key) return;
+  try {
+    const decrypted = CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8);
+    document.getElementById("cryptoOutput").textContent = decrypted || "Gagal dekripsi. Password salah?";
+  } catch {
+    document.getElementById("cryptoOutput").textContent = "Error saat dekripsi.";
+  }
+}
+
+function sanitizeHTML() {
+  const raw = document.getElementById("htmlRaw").value;
+  const clean = DOMPurify.sanitize(raw);
+  document.getElementById("htmlSafeOutput").textContent = clean;
 }
   </script>
 </body>
