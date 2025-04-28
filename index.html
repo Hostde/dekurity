@@ -219,6 +219,31 @@
       transition: transform 0.3s ease;
     }
 
+    .chat-ai-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--accent);
+  color: #0f0f1a;
+  font-size: 28px;
+  padding: 16px;
+  border-radius: 50%;
+  box-shadow: var(--soft-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 1002;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: float 2s ease-in-out infinite, introGlow 1.5s ease;
+}
+
+.chat-ai-button:hover {
+  background-color: #00ccbb;
+  transform: scale(1.1);
+  text-shadow: var(--soft-glow);
+}
+
     .floating-icon:hover {
       transform: scale(1.1);
       text-shadow: var(--soft-glow);
@@ -287,6 +312,11 @@ Saya Arya Deka Alhadid, siswa di salah satu sekolah swasta ternama di Jambi. Akt
   </div>
 
   <i class="fas fa-info-circle floating-icon" onclick="toggleCopyright()"></i>
+
+<!-- Floating Chat AI Icon -->
+<a href="chatai.html" class="chat-ai-button" title="Chat AI">
+  <i class="fas fa-robot"></i>
+</a>
 
   <!-- Copyright Panel -->
   <div class="copyright-panel" id="copyrightPanel">
