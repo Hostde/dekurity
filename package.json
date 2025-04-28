@@ -1,0 +1,10 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "description": "Serverless function ai",
+  "main": "api/ai.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "license": "MIT"
+}
